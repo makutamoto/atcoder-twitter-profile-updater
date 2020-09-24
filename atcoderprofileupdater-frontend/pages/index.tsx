@@ -66,6 +66,7 @@ export const Index: React.FC<Props> = (props) => {
                 <Alert variant="danger">エラーが発生しました。</Alert>
             }
             <Alert variant="primary">BioのAtCoder()という文字列にAtCoder(875)のようにレートを挿入したり、バナー画像をレート遷移グラフに設定したりできます。</Alert>
+            <Alert variant="warning">バナー画像やBioは変更前に戻せません。もし戻す可能性がある場合は必ずバックアップを取った上で使用して下さい。</Alert>
             <div className="text-center">
                 <Figure>
                     <Figure.Image src="/pictures/example.png" thumbnail />

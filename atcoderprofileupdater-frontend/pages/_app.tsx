@@ -10,10 +10,10 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     return (
         <Provider session={pageProps.session}>
             <Head>
-                <title>AtCoder Profile Updater</title>
+                <title>AtCoder Twitter Profile Updater</title>
             </Head>
             <Navbar bg="dark" variant="dark" sticky="top">
-                <Navbar.Brand>AtCoder Profile Updater</Navbar.Brand>
+                <Navbar.Brand>AtCoder Twitter Profile Updater</Navbar.Brand>
             </Navbar>
             <Container className="p-4">
                 <main>
