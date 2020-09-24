@@ -1,0 +1,7 @@
+{
+  "version": "2018-05-29",
+  "operation": "DeleteItem",
+  "key": {
+    "twitterID": $util.dynamodb.toDynamoDBJson($context.arguments.twitterID),
+  },
+}

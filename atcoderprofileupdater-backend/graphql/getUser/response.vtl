@@ -1,0 +1,5 @@
+#if($util.isNull($context.result))
+null
+#else
+$util.toJson({"twitterID": $context.result.twitterID, "atcoderID": $context.result.atcoderID, "banner": $context.result.banner, "bio": $context.result.bio })
+#end

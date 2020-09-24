@@ -1,0 +1,26 @@
+{
+  "name": "updater",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/puppeteer-core": "^2.0.0",
+    "chrome-aws-lambda": "^5.3.0",
+    "jimp": "^0.16.1",
+    "puppeteer-core": "^5.3.0",
+    "twitter-lite": "^0.14.0"
+  },
+  "targets": {
+    "cdk-lambda": {
+      "context": "node",
+      "includeNodeModules": {
+        "aws-sdk": false
+      },
+      "sourceMap": false,
+      "minify": false,
+      "engines": {
+        "node": ">= 12"
+      }
+    }
+  }
+}

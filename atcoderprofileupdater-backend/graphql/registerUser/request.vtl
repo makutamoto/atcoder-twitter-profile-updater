@@ -1,0 +1,8 @@
+{
+  "version": "2018-05-29",
+  "operation": "PutItem",
+  "key": {
+    "twitterID": $util.dynamodb.toDynamoDBJson($context.arguments.input.twitterID),
+  },
+  "attributeValues": $util.dynamodb.toMapValuesJson($context.arguments.input),
+}

@@ -1,0 +1,9 @@
+#if($ctx.error)
+  $util.error($ctx.error.message, $ctx.error.type)
+#end
+#set($payloadJson = $util.toJson({"twitterID": $context.arguments.input.twitterID, "atcoderID": $context.arguments.input.atcoderID, "banner": $context.arguments.input.banner, "bio": $context.arguments.input.bio, "secret": $context.arguments.input.secret, "token": $context.arguments.input.token }))
+#if($ctx.result.statusCode == 200)
+    $payloadJson
+#else
+    $util.appendError($payloadJson, "$ctx.result.statusCode")
+#end

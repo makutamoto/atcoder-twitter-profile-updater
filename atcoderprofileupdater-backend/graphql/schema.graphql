@@ -1,0 +1,32 @@
+﻿schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Mutation {
+    registerUser(input: UserInput!): User
+    unregisterUser(twitterID: ID!): User
+    updateUser(input: UserInput!): User
+}
+
+type User {
+    twitterID: ID!
+    atcoderID: String!
+    banner: Boolean!
+    bio: Boolean!
+    secret: String
+    token: String
+}
+
+type Query {
+    getUser(twitterID: ID!): User
+}
+
+input UserInput {
+    twitterID: ID!
+    atcoderID: ID!
+    banner: Boolean!
+    bio: Boolean!
+    secret: String!
+    token: String!
+}
