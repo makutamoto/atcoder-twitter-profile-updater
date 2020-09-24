@@ -8,9 +8,11 @@ import axios from 'axios';
 import { Session } from '../lib/session';
 import { query } from '../lib/graphql';
 
-enum UpdateStatus {
+enum Status {
     Normal,
     Updating,
+    NoAtCoderID,
+    CheckAtLeastOne,
     Success,
     Failed,
 }
@@ -26,27 +28,41 @@ export const Index: React.FC<Props> = (props) => {
     const [banner, setBanner] = useState(props.banner ??false);
     const [bio, setBio] = useState(props.bio ?? false);
     const [autoUpdate, setAutoUpdate] = useState(!!props.atcoderID);
-    const [updateStatus, setUpdateStatus] = useState(UpdateStatus.Normal);
+    const [status, setStatus] = useState(Status.Normal);
     const onClickUpdateButton = useCallback(() => {
-        setUpdateStatus(UpdateStatus.Updating);
+        if(!atcoderID) {
+            setStatus(Status.NoAtCoderID);
+            return;
+        }
+        if(!banner && !bio) {
+            setStatus(Status.CheckAtLeastOne);
+            return;
+        }
+        setStatus(Status.Updating);
         axios.post('/api/update', {
             atcoderID,
             banner,
             bio,
             autoUpdate,
         }).then(() => {
-            setUpdateStatus(UpdateStatus.Success);
+            setStatus(Status.Success);
         }).catch((err) => {
             console.error(err);
-            setUpdateStatus(UpdateStatus.Failed);
+            setStatus(Status.Failed);
         });
     }, [atcoderID, banner, bio, autoUpdate]);
     return (
         <>
-            {updateStatus === UpdateStatus.Success &&
+            {status === Status.NoAtCoderID &&
+                <Alert variant="danger">AtCoder IDを入力して下さい。</Alert>
+            }
+            {status === Status.CheckAtLeastOne &&
+                <Alert variant="danger">少なくともバナー画像もしくはBioのどちらか一方にチェックをつけてください。</Alert>
+            }
+            {status === Status.Success &&
                 <Alert variant="success">更新キューに入りました。しばらくすると更新されます。</Alert>
             }
-            {updateStatus === UpdateStatus.Failed &&
+            {status === Status.Failed &&
                 <Alert variant="danger">エラーが発生しました。</Alert>
             }
             <Alert variant="primary">BioのAtCoder()という文字列にAtCoder(875)のようにレートを挿入したり、バナー画像をレート遷移グラフに設定したりできます。</Alert>
@@ -104,8 +120,8 @@ export const Index: React.FC<Props> = (props) => {
                             />
                         </div>
                         <div className="text-right">
-                            <Button variant="primary" disabled={updateStatus === UpdateStatus.Updating} onClick={onClickUpdateButton}>
-                                {updateStatus === UpdateStatus.Updating &&
+                            <Button variant="primary" disabled={status === Status.Updating} onClick={onClickUpdateButton}>
+                                {status === Status.Updating &&
                                     <Spinner className="mr-2" animation="border" size="sm" />
                                 }
                                 プロフィールを更新
