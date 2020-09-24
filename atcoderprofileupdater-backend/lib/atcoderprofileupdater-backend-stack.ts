@@ -18,7 +18,13 @@ export class AtCoderProfileUpdaterBackendStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 
-        const queue = new Queue(this, 'queue');
+        const deadletterqueue = new Queue(this, 'deadletterqueue');
+        const queue = new Queue(this, 'queue', {
+            deadLetterQueue: {
+                maxReceiveCount: 2,
+                queue: deadletterqueue,
+            }
+        });
         const sqsEventSource = new SqsEventSource(queue, {
             batchSize: 1,
         });
@@ -26,6 +32,7 @@ export class AtCoderProfileUpdaterBackendStack extends cdk.Stack {
             entry: join(__dirname, '../lambda/updater/index.ts'),
             timeout: cdk.Duration.seconds(30),
             memorySize: 512,
+            reservedConcurrentExecutions: 1,
             events: [sqsEventSource],
             nodeModules: ['chrome-aws-lambda'],
             environment: {
@@ -46,6 +53,7 @@ export class AtCoderProfileUpdaterBackendStack extends cdk.Stack {
         const batchUpdate = new NodejsFunction(this, 'batch-update', {
             entry: join(__dirname, '../lambda/batch-update/index.ts'),
             timeout: cdk.Duration.seconds(60),
+            reservedConcurrentExecutions: 1,
             environment: {
                 TABLE_NAME: userTable.tableName,
                 QUEUE_URL: queue.queueUrl,
