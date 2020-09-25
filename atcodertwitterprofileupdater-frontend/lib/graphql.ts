@@ -25,7 +25,6 @@ const client = new AWSAppSyncClient({
 
 export async function mutate<V>(document: DocumentNode, variables: V) {
     await client.mutate({
-        fetchPolicy: "network-only",
         mutation: document,
         variables: variables,
     });
