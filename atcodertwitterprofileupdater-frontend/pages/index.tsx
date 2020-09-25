@@ -199,8 +199,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     const res = (await query(GETUSER_DOCUMENT, {
         twitterID: session.user.id,
     })) as GetUserResponse;
-    // eslint-disable-next-line
-    console.log(res);
     return {
         props: {
             ...res.getUser,
