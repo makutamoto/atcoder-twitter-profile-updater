@@ -1,7 +1,7 @@
 on:
     push:
       paths:
-        - atcoderprofileupdater-backend/**
+        - atcodertwitterprofileupdater-backend/**
       branches:
         - master
   name: Auto Deploy to AWS
@@ -16,12 +16,12 @@ on:
           with:
             node-version: '12.x'
         - name: Install Dependencies
-          working-directory: atcoderprofileupdater-backend
+          working-directory: atcodertwitterprofileupdater-backend
           run: |
             yarn global add aws-cdk
             yarn
         - name: Deploy to AWS
-          working-directory: atcoderprofileupdater-backend
+          working-directory: atcodertwitterprofileupdater-backend
           run: yes | $(yarn global bin)/cdk deploy
           env:
             AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}

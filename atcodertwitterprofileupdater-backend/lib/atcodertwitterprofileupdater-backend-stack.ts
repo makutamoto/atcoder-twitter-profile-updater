@@ -14,7 +14,7 @@ if(API_KEY === undefined) throw "API_KEY is not defined.";
 const API_SECRET_KEY = process.env.API_SECRET_KEY as string;
 if(API_SECRET_KEY === undefined) throw "API_SECRET_KEY is not defined.";
 
-export class AtCoderProfileUpdaterBackendStack extends cdk.Stack {
+export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
     constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
         super(scope, id, props);
 

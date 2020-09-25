@@ -1,5 +1,5 @@
 {
-  "name": "atcoderprofileupdater-backend",
+  "name": "atcodertwitterprofileupdater-backend",
   "version": "0.1.0",
   "bin": {
     "atcoderprofileupdater-backend": "bin/atcoderprofileupdater-backend.js"

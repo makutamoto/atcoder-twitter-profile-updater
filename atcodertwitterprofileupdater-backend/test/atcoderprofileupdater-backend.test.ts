@@ -1,11 +1,11 @@
 import { expect as expectCDK, matchTemplate, MatchStyle } from '@aws-cdk/assert';
 import * as cdk from '@aws-cdk/core';
-import * as AtCoderProfileUpdaterBackend from '../lib/atcoderprofileupdater-backend-stack';
+import * as AtCoderTwitterProfileUpdaterBackend from '../lib/atcodertwitterprofileupdater-backend-stack';
 
 test('Empty Stack', () => {
     const app = new cdk.App();
     // WHEN
-    const stack = new AtCoderProfileUpdaterBackend.AtCoderProfileUpdaterBackendStack(app, 'AtCoderProfileUpdaterBackendStack');
+    const stack = new AtCoderTwitterProfileUpdaterBackend.AtCoderTwitterProfileUpdaterBackendStack(app, 'AtCoderTwitterProfileUpdaterBackendStack');
     // THEN
     expectCDK(stack).to(matchTemplate({
       "Resources": {}
