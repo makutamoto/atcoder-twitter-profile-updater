@@ -18,10 +18,18 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
                 <Navbar.Collapse>
                     <Nav>
                         <NavDropdown id="nav-dropdown-links" title="Links">
-                            <NavDropdown.Item href="https://github.com/makutamoto/atcoder-twitter-profile-updater">
+                            <NavDropdown.Item
+                                href="https://github.com/makutamoto/atcoder-twitter-profile-updater"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
                                 GitHub
                             </NavDropdown.Item>
-                            <NavDropdown.Item href="https://twitter.com/makutamoto">
+                            <NavDropdown.Item
+                                href="https://twitter.com/makutamoto"
+                                target="_blank"
+                                rel="noreferrer"
+                            >
                                 @makutamoto
                             </NavDropdown.Item>
                         </NavDropdown>
