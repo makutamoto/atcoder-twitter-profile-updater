@@ -141,4 +141,3 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         updateUser.addDependsOn(QueueDataSource);
     }
 }
-
