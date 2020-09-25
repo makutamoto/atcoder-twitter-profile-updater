@@ -150,4 +150,3 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         });
     }
 }
-
