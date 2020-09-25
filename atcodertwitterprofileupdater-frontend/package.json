@@ -28,7 +28,6 @@
   "dependencies": {
     "@types/next-auth": "^3.1.5",
     "aws-appsync": "^4.0.1",
-    "aws-sdk": "^2.759.0",
     "axios": "^0.20.0",
     "bootstrap": "^4.5.2",
     "graphql": "^15.3.0",
