@@ -74,7 +74,7 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         });
 
         const api = new GraphqlApi(this, 'api', {
-            name: 'atcoder-profile-updater-api',
+            name: 'atcoder-twitter-profile-updater-api',
             schema: Schema.fromAsset(join(__dirname, '../graphql/schema.graphql')),
             authorizationConfig: {
                 defaultAuthorization: {
@@ -111,7 +111,7 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         const QueueDataSource = new CfnDataSource(this, 'QueueDataSource',
             {
                 apiId: api.apiId,
-                name: 'AtCoderProfileUpdaterQueue',
+                name: 'AtCoderTwitterProfileUpdaterQueue',
                 serviceRoleArn: QueueDataSourceRole.roleArn,
                 type: 'HTTP',
                 httpConfig: {
