@@ -1,12 +1,12 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import NextAuth, { InitOptions } from 'next-auth';
-import Providers from 'next-auth/providers';
+import { NextApiRequest, NextApiResponse } from "next";
+import NextAuth, { InitOptions } from "next-auth";
+import Providers from "next-auth/providers";
 
 const options: InitOptions = {
     providers: [
         Providers.Twitter({
             clientId: process.env.TWITTER_ID,
-            clientSecret: process.env.TWITTER_SECRET
+            clientSecret: process.env.TWITTER_SECRET,
         }),
     ],
     callbacks: {
@@ -17,6 +17,7 @@ const options: InitOptions = {
             return { ...token, user, ...account };
         },
     },
-}
+};
 
-export default (req: NextApiRequest, res: NextApiResponse) => NextAuth(req, res, options);
+export default (req: NextApiRequest, res: NextApiResponse) =>
+    NextAuth(req, res, options);

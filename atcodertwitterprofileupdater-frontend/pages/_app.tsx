@@ -1,10 +1,10 @@
-import React from 'react';
-import { AppProps } from 'next/app';
-import Head from 'next/head';
-import { Provider } from 'next-auth/client';
-import { Container, Navbar } from 'react-bootstrap';
+import React from "react";
+import { AppProps } from "next/app";
+import Head from "next/head";
+import { Provider } from "next-auth/client";
+import { Container, Navbar } from "react-bootstrap";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App: React.FC<AppProps> = ({ Component, pageProps }) => {
     return (
