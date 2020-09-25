@@ -12,7 +12,13 @@ const App: React.FC<AppProps> = ({ Component, pageProps }) => {
             <Head>
                 <title>AtCoder Twitter Profile Updater</title>
             </Head>
-            <Navbar bg="dark" variant="dark" sticky="top">
+            <Navbar
+                collapseOnSelect
+                expand="lg"
+                bg="dark"
+                variant="dark"
+                sticky="top"
+            >
                 <Navbar.Brand>AtCoder Twitter Profile Updater</Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse>
