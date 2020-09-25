@@ -4,7 +4,7 @@ import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources';
 import { NodejsFunction } from '@aws-cdk/aws-lambda-nodejs';
 import { AuthorizationType, CfnDataSource, CfnResolver, GraphqlApi, MappingTemplate, Schema } from '@aws-cdk/aws-appsync';
 import { AttributeType, Table } from '@aws-cdk/aws-dynamodb';
-import { Role, PolicyStatement, ServicePrincipal } from '@aws-cdk/aws-iam';
+import { Role, PolicyStatement, ServicePrincipal, User } from '@aws-cdk/aws-iam';
 import { Rule, Schedule } from '@aws-cdk/aws-events';
 import { LambdaFunction } from '@aws-cdk/aws-events-targets';
 import { join } from 'path';
@@ -139,5 +139,11 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
                     .renderTemplate(),
         });
         updateUser.addDependsOn(QueueDataSource);
+
+        const vercelUser = new User(this, 'vercel-user');
+        vercelUser.addToPolicy(new PolicyStatement({
+            resources: [api.arn + '/*'],
+            actions: ['appsync:GraphQL'],
+        }));
     }
 }
