@@ -21,7 +21,7 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         const deadletterqueue = new Queue(this, 'deadletterqueue');
         const queue = new Queue(this, 'queue', {
             deadLetterQueue: {
-                maxReceiveCount: 2,
+                maxReceiveCount: 5,
                 queue: deadletterqueue,
             }
         });
@@ -32,7 +32,7 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
             entry: join(__dirname, '../lambda/updater/index.ts'),
             timeout: cdk.Duration.seconds(30),
             memorySize: 512,
-            reservedConcurrentExecutions: 1,
+            reservedConcurrentExecutions: 5,
             events: [sqsEventSource],
             nodeModules: ['chrome-aws-lambda'],
             environment: {
@@ -53,7 +53,6 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         const batchUpdate = new NodejsFunction(this, 'batch-update', {
             entry: join(__dirname, '../lambda/batch-update/index.ts'),
             timeout: cdk.Duration.seconds(60),
-            reservedConcurrentExecutions: 1,
             environment: {
                 TABLE_NAME: userTable.tableName,
                 QUEUE_URL: queue.queueUrl,
@@ -69,7 +68,7 @@ export class AtCoderTwitterProfileUpdaterBackendStack extends cdk.Stack {
         }));
         const batchUpdateTarget = new LambdaFunction(batchUpdate);
         new Rule(this, 'batch-update-cron', {
-            schedule: Schedule.cron({ weekDay: '1', hour: '1', minute: '0' }),
+            schedule: Schedule.cron({ weekDay: '1', hour: '16', minute: '0' }),
             targets: [batchUpdateTarget],
         });
 
