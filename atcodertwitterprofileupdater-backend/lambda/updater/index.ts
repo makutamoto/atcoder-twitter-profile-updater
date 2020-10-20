@@ -48,7 +48,7 @@ const RATING_COLOR_NAMES = [
     '赤', // RED
 ];
 
-const ATCODER_RATING_REGEX = /AtCoder(色|[灰茶緑水青黄橙赤])?\s*(級|\d+\s*級|[初二三四五六七八九十]段|[皆極]伝)?\s*\(\d*?\)/g;
+const ATCODER_RATING_REGEX = /AtCoder(\s*[色灰茶緑水青黄橙赤])?(\s*(?:級|\d+\s*級|[初二三四五六七八九十]段|[皆極]伝))?(\s*\(\d*?\))?/g;
 
 async function getUserData(username: string): Promise<UserData> {
     const browser = await puppeteer.launch({
@@ -106,8 +106,8 @@ async function setProfile(userID: string, token: string, secret: string, data: U
             user_id: userID,
             include_entities: false,
         });
-        const description = profile.description.replace(ATCODER_RATING_REGEX, (_: string, color: string | null, kyu: string | null) =>
-            `AtCoder${color ? data.color : ""}${kyu ? " " + data.kyu : ""} (${data.rating})`
+        const description = profile.description.replace(ATCODER_RATING_REGEX, (_: string, color: string | null, kyu: string | null, rating: string | null) =>
+            `AtCoder${color ? ` ${data.color}` : ""}${kyu ? ` ${data.kyu}` : ""}${rating ? ` (${data.rating})` : ""}`
         );
         await client.post('account/update_profile', {
             description,
