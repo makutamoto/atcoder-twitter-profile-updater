@@ -15,6 +15,8 @@ interface QueueMessage {
 
 interface UserData {
     rating: number,
+    color: string,
+    kyu: string,
     graph: string,
 }
 
@@ -35,7 +37,18 @@ const RATING_COLORS = [
     '#FAB2BA', // RED
 ];
 
-const ATCODER_RATING_REGEX = /AtCoder\(\d*?\)/g;
+const RATING_COLOR_NAMES = [
+    '灰', // GRAY
+    '茶', // BROWN
+    '緑', // GREEN
+    '水', // CYAN
+    '青', // BLUE
+    '黄', // YELLOW
+    '橙', // ORANGE
+    '赤', // RED
+];
+
+const ATCODER_RATING_REGEX = /AtCoder(\s*[色灰茶緑水青黄橙赤])?(\s*(?:級|\d+\s*級|[初二三四五六七八九十]段|[皆極]伝))?(\s*\(\d*?\))?/g;
 
 async function getUserData(username: string): Promise<UserData> {
     const browser = await puppeteer.launch({
@@ -55,6 +68,11 @@ async function getUserData(username: string): Promise<UserData> {
         page.evaluate(`Number(document.querySelector('#main-container div.row div:nth-of-type(3) table.dl-table tbody tr:nth-of-type(2) td span').innerText)`)
             .catch(() => 0)
     ) as number;
+    const color = RATING_COLOR_NAMES[Math.min(7, Math.floor(rating / 400))];
+    const kyu = (await
+        page.evaluate(`document.querySelector('#main-container div.row div:nth-of-type(3) table.dl-table tbody tr:nth-of-type(3) td span.bold').innerText`)
+            .catch(() => "")
+    ) as string;
     const backgroundColor = RATING_COLORS[Math.min(7, Math.floor(rating / 400))];
     const backgraundImage = await Jimp.create(1500, 500, backgroundColor);
     const graphImage = await Jimp.read(await page.screenshot({
@@ -73,7 +91,7 @@ async function getUserData(username: string): Promise<UserData> {
     );
     const graph = (await backgraundImage.getBufferAsync(Jimp.MIME_PNG)).toString('base64');
     await browser.close();
-    return { rating, graph };
+    return { rating, color, kyu, graph };
 }
 
 async function setProfile(userID: string, token: string, secret: string, data: UserData, bio: boolean, banner: boolean) {
@@ -88,7 +106,9 @@ async function setProfile(userID: string, token: string, secret: string, data: U
             user_id: userID,
             include_entities: false,
         });
-        const description = profile.description.replace(ATCODER_RATING_REGEX, `AtCoder(${data.rating})`);
+        const description = profile.description.replace(ATCODER_RATING_REGEX, (_: string, color: string | null, kyu: string | null, rating: string | null) =>
+            `AtCoder${color ? ` ${data.color}` : ""}${kyu ? ` ${data.kyu}` : ""}${rating ? ` (${data.rating})` : ""}`
+        );
         await client.post('account/update_profile', {
             description,
         });
