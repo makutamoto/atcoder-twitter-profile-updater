@@ -60,6 +60,7 @@ async function getUserData(username: string): Promise<UserData> {
     await page.goto(`https://atcoder.jp/users/${username}/?lang=ja&graph=rating`, {
         waitUntil: 'networkidle0',
     });
+    await page.evaluate(`document.head.innerHTML += '<style>@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap');body { font-family: 'Noto Sans JP', sans-serif; };</style>`)
     await page.setViewport({
         width: 1000,
         height: 900,
