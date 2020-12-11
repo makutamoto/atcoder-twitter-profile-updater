@@ -57,7 +57,7 @@ async function getUserData(username: string): Promise<UserData> {
         headless: chrome.headless,
     });
     const page = await browser.newPage();
-    await page.goto(`https://atcoder.jp/users/${username}/?lang=ja&graph=rating`, {
+    await page.goto(`https://atcoder.jp/users/${username}/?lang=en&graph=rating`, {
         waitUntil: 'networkidle0',
     });
     await page.setViewport({
