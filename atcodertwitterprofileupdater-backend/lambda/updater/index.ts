@@ -78,7 +78,7 @@ async function getUserData(username: string): Promise<UserData> {
     const graphImage = await Jimp.read(await page.screenshot({
         clip: {
             x: 290,
-            y: 330,
+            y: 320,
             width: 640,
             height: 445,
         },
